@@ -4,12 +4,16 @@
 // THINk: 这个函数是一个纯函数（pure function）吗？
 // READ: 纯函数 <https://zh.wikipedia.org/wiki/%E7%BA%AF%E5%87%BD%E6%95%B0>
 static unsigned long long fibonacci(int i) {
-    // TODO: 为缓存设置正确的初始值
-    static unsigned long long cache[96], cached;
-    // TODO: 设置正确的循环条件
-    for (; false; ++cached) {
+    // 初始化缓存的前两个值为斐波那契数列的前两项
+    static unsigned long long cache[96] = {0, 1};
+    // 记录当前已缓存的斐波那契值数量（初始为2，因为前两个值已初始化）
+    static int cached = 2;
+    
+    // 若需要计算的i大于已缓存的最大值，则扩展缓存
+    for (; cached <= i; ++cached) {
         cache[cached] = cache[cached - 1] + cache[cached - 2];
     }
+    
     return cache[i];
 }
 
